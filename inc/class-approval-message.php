@@ -2,24 +2,21 @@
 
 class PH_Slack_Approval_Message{
 
+  private $client;
+
   public function on_approval( $attr, $object ){
 
-    $text = 'Generic Text';
     $attach = array();
-
 
     $parents = ph_get_parents_ids( $attr, 'comment'  );
     $project = $parents['project'];
-    $title = get_the_title( $project );
+    $title = html_entity_decode( get_the_title( $project ) );
     $status = ph_get_mockup_approval_status( $project );
-    $permalink = get_the_permalink($project);
 
     if ( isset( $status['by'] ) && isset( $status['on'] ) ) {
       $by = sanitize_text_field( $status['by'] );
       $on = sanitize_text_field( $status['on'] );
     }
-
-
 
     // Bail if the project isn't approved
     if ( !$this->check_approval($project)  ){
@@ -29,14 +26,13 @@ class PH_Slack_Approval_Message{
     $mockup_approved = ph_mockup_is_approved( $project );
 
     if ( $mockup_approved ){
-      $text = "Approval for $title";
 
       // Build the attachement
       $attach = array(
         'fallback'      => 'New Image Approval for ' . $title,
-        'pretext'       => $text,
+        'pretext'       => "Approval for " . $title,
         'title'         => $title,
-        'title_link'    => $permalink,
+        'title_link'    => get_the_permalink($project),
         'color'         => 'good',
         'fields'        => array(
           array(
@@ -55,14 +51,19 @@ class PH_Slack_Approval_Message{
     }
 
     // Where do we send it?
-    $webhook = TitanFramework::getInstance('ph-slack')->getOption('webhook');
     $channel = TitanFramework::getInstance('ph-slack')->getOption('approval_channel');
 
     // Build client and explicit message
-    $client = new Maknz\Slack\Client($webhook);
+    $this->build_client();
 
     // TODO: Send a message to multiple channels
-    $message = $client->createMessage()->to($channel)->attach($attach)->send();
+    $this->send_message($attach, $channel );
+  }
+
+  private function build_client(){
+    $webhook = TitanFramework::getInstance('ph-slack')->getOption('webhook');
+    // Build client and explicit message
+    $this->client = new Maknz\Slack\Client($webhook);
   }
 
   private function check_approval($project){
@@ -74,17 +75,9 @@ class PH_Slack_Approval_Message{
     return ph_mockup_is_approved( $project );
   }
 
-  public function send_message($text = 'No Message', $channel = ''){
+  public function send_message($attach, $channel){
+    $message = $this->client->createMessage()->to($channel)->attach($attach)->send();
 
-    //$text = 'Message Text';
-
-    $webhook = TitanFramework::getInstance('ph-slack')->getOption('webhook');
-
-    $client = new Maknz\Slack\Client($webhook);
-
-    $message = $client->createMessage()->to($channel)->setText($text)->send();
-
-    var_dump( $message );
   }
 }
 
