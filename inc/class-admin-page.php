@@ -6,9 +6,8 @@ class PH_Slack_Admin_Page{
     $titan = TitanFramework::getInstance('ph-slack');
     $panel = $titan->createAdminPanel( array(
       'name'      => 'Slack Webhook',
-      // /'title'     => 'ProjectHuddle Slack Webhook',
       'id'        => 'ph-slack',
-      'parent'    => 'edit.php?post_type=ph-project',
+      'parent'    => 'project-huddle',
       'position'  => 1000,
     ));
     $panel->createOption( array(
