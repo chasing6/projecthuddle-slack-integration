@@ -21,7 +21,7 @@ class PH_Slack_Approval_Message{
     $approval = ph_mockup_is_approved( $project );
 
     // Bail if the project isn't approved
-    if ( !$approval  ){
+    if ( $approval  ){
       return;
     }
 
@@ -48,7 +48,7 @@ class PH_Slack_Approval_Message{
 
     // Where do we send it?
     $channel = TitanFramework::getInstance('ph-slack')->getOption('approval_channel');
-    
+
     // Build client and explicit message
     $this->build_client();
 

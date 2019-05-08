@@ -23,6 +23,12 @@ class PH_Slack_Admin_Page{
       'desc'    => 'Where should we send project approval messages? Must include # or @',
       'placeholder' => '#general'
     ));
+    $panel->createOption( array(
+      'name'    => 'Send Unapprovals',
+      'id'      => 'send_unapprovals',
+      'type'    => 'checkbox',
+      'desc'    => 'Should we also send unapprovals to Slack?',
+    ));
 
     $panel->createOption( array(
       'type'    => 'save'
