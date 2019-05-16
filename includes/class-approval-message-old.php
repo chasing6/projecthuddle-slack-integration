@@ -1,17 +1,24 @@
 <?php
+namespace PH_Slack;
 
-class PH_Slack_Approval_Message{
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+class Approval_Message_Old {
 
   private $client;
   private $webhook = NULL;
 
   public function __construct() {
+
     $this->init();
+		
   }
 
   private function init() {
     $this->webhook = get_option( 'ph_slack_webhook' );
-    $this->client = new Maknz\Slack\Client( $this->webhook );
+    $this->client = new \Maknz\Slack\Client( $this->webhook );
   }
 
   public function on_approval( $attr, $object ){

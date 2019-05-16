@@ -1,6 +1,11 @@
 <?php
+namespace PH_Slack;
 
-class PH_Slack_Settings {
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+class Settings {
   public function add_slack_settings( $settings ) {
     $settings['slack'] = array(
       'title' => 'Slack',

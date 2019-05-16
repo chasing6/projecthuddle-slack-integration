@@ -1,6 +1,11 @@
 <?php
+namespace PH_Slack;
 
-class PH_Slack_Admin_Page{
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+class Admin_Page{
 
   public function add_admin_page(){
     $titan = TitanFramework::getInstance('ph-slack');
