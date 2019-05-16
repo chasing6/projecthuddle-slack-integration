@@ -23,34 +23,30 @@ class PH_Slack{
 
   public function __construct(){
     $this->init();
+    //echo get_option( 'ph_slack_webhook' );
   }
 
   public function init(){
     $this->load_dependancies();
     $this->load_hooks();
-
-
-  }
-
-  private function load_titan(){
-    require_once plugin_dir_path(__FILE__) . 'vendor/titan/titan-framework-checker.php';
-    add_filter( 'titan_checker_installation_notice', function(){return 'PH Slack requires Titan Framework to be installed.';});
-    add_filter( 'titan_checker_activation_notice', function(){return 'PH Slack requires Titan Framework to be activated.';});
   }
 
   private function load_dependancies(){
-    $this->load_titan();
     require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
     require_once plugin_dir_path(__FILE__) . 'inc/class-admin-page.php';
     require_once plugin_dir_path(__FILE__) . 'inc/class-approval-message.php';
+    require_once plugin_dir_path(__FILE__) . 'inc/class-settings.php';
   }
 
   private function load_hooks(){
-    // Create an admin page under the ProjectHuddle menu item
-    add_action( 'tf_create_options', ['PH_Slack_Admin_Page', 'add_admin_page']);
 
     $approval_msg = new PH_Slack_Approval_Message();
-    add_action('ph_mockup_publish_approval', [$approval_msg, 'on_approval'], 10, 2 );
+    add_action('ph_mockup_publish_approval', [ $approval_msg, 'on_approval' ], 10, 2 );
+    //add_action( 'ph_mockup_rest_update_approval_attribute', [ $approval_msg, 'basic_message' ], 10, 3 );
+
+    $settings = new PH_Slack_Settings();
+    add_filter( 'project_huddle_settings_fields', [ $settings, 'add_slack_settings' ] );
+
   }
 }
 
