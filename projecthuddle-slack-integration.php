@@ -8,7 +8,7 @@
  * Plugin Name:       ProjectHuddle Slack Integration
  * Plugin URI:        http://innovatedentalmarketing.com/
  * Description:       Bring ProjectHuddle to Slack
- * Version:           1.0.1
+ * Version:           1.1.0
  * Author:            Scott McCoy
  * Author URI:        http://c6creative.com
  * License:           GPL-2.0+
