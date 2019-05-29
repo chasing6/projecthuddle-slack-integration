@@ -65,10 +65,6 @@ class Slack_Message {
 					'value' => get_comment_date( 'm-d-Y g:iA', $object ),
 					'short' => true,
 				),
-				array(
-					'title' => 'Text',
-					'value' => $object->comment_content,
-				)
 			),
 		);
 
