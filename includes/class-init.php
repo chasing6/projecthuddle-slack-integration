@@ -28,8 +28,8 @@ class Init {
 
   private function load_hooks(){
 
-    $approval_msg = new Approval_Message_Old();
-    add_action('ph_mockup_publish_approval', [ $approval_msg, 'on_approval' ], 10, 2 );
+		$slack_msg = new Slack_Message();
+		add_action( 'ph_mockup_publish_approval', [ $slack_msg, 'cud_message' ], 10, 2 );
 
     $settings = new Settings();
     add_filter( 'project_huddle_settings_fields', [ $settings, 'add_slack_settings' ] );
