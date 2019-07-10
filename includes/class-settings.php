@@ -16,7 +16,7 @@ class Settings {
   				'description' => __( 'Webhooks can be found at <a href="https://my.slack.com/apps/manage/custom-integrations" target="blank">Incoming Webhooks</a>', 'project-huddle' ),
   				'type'        => 'text',
           'default'     => get_option( 'ph_slack_webhook' ),
-  			),
+  			),/*
         'approval_channels' => array(
   				'id'          => 'slack_approval_channels',
   				'label'       => __( 'Approval Message Channel(s)', 'project-huddle' ),
@@ -30,7 +30,7 @@ class Settings {
   				'description' => __( 'Should we send unapproval messages to Slack?', 'project-huddle' ),
   				'type'        => 'checkbox',
   				'default'     => '',
-  			)
+  			)*/
       ),
     );
 
